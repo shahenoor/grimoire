@@ -74,24 +74,24 @@ Additionally, users need reminders and progress tracking to stay on top of the a
 ### Mockups
 
 #### Landing Page
-![](./grimoire-frontend/src/assets/LandingPage1.png)
+![](./src/assets/LandingPage1.png)
 
 #### Landing Page (App Features)
-![](./grimoire-frontend/src/assets/LandingPage2.png)
+![](./src/assets/LandingPage2.png)
 
 #### Sign In Page
-![](./grimoire-frontend/src/assets/SignIn.png)
+![](./src/assets/SignIn.png)
 
 #### Monthly Tracker View
-![](./grimoire-frontend/src/assets/MonthlyTracker.png)
+![](./src/assets/MonthlyTracker.png)
 
 #### Kanban Board (Date-wise)
-![](./grimoire-frontend/src/assets/Kanban.png)
+![](./src/assets/Kanban.png)
 
 
 
 ### Data
-![](./grimoire-frontend/src/assets/sql-diagram.png)
+![](./src/assets/sql-diagram.png)
  
 
 ### Endpoints
