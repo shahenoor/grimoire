@@ -4,7 +4,7 @@ import knex from "knex";
 import config from "./knexfile.js"
 import "dotenv/config";
 import jobRoutes from './routes/jobRoutes.js'; 
-// import userRoutes from './routes/userRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const knexDb = knex(config.development);
 
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/jobs', jobRoutes); 
-// app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
