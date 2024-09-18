@@ -46,14 +46,19 @@
     font-size: 1.2rem;
     line-height: 2rem;
 }
-@mixin dt-labels-links-buttons {
-    font-size: .875rem;
+@mixin dt-calender-header{
+    font-size: 1.5rem;
     line-height: 1.375rem;
 }
-@mixin dt-table-header {
-    font-size: .75rem;
-    line-height: 1.125rem;
+@mixin dt-calender-week-label {
+    font-size: 1.2rem !important;
+    line-height: 1.125rem !important;
 }
+@mixin dt-calender-day-label {
+    font-size: 1.2rem !important;
+    line-height: 1.125rem !important;
+}
+
 @mixin dt-body-large {
     font-size: 1rem;
     line-height: 1.75rem;
