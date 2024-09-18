@@ -1,0 +1,40 @@
+@use 'colors' as *;
+
+/* Font Face Custom */
+@mixin font-face($font-name, $font-path, $weight) {
+    @font-face {
+        font-family: $font-name;
+        src: url("#{$font-path}.ttf") format("truetype");
+        font-weight: $weight;
+    }
+}
+
+/* Flexbox layout with specified justification and alignment */
+@mixin flex-layout($justify, $align) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+/* Flexbox direction (row or column) */
+@mixin flex-direction($direction) {
+    display: flex;
+    flex-direction: $direction;
+}
+
+/* Form Input Basic Common Styling*/
+@mixin form-input() {
+    display: flex;
+    padding: .75rem;
+    border-radius: 4px;
+    //border: 1px solid $secondary-mercury;
+    margin-bottom: 1rem;
+}
+
+@mixin avatar-placeholder() {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    //background-color: $secondary-mercury;
+}
+

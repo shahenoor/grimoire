@@ -74,19 +74,19 @@ Additionally, users need reminders and progress tracking to stay on top of the a
 ### Mockups
 
 #### Landing Page
-![](./src/assets/LandingPage1.png)
+![](./src/assets/images/LandingPage1.png)
 
 #### Landing Page (App Features)
-![](./src/assets/LandingPage2.png)
+![](./src/assets/images/LandingPage2.png)
 
 #### Sign In Page
-![](./src/assets/SignIn.png)
+![](./src/assets/images/SignIn.png)
 
 #### Monthly Tracker View
-![](./src/assets/MonthlyTracker.png)
+![](./src/assets/images/MonthlyTracker.png)
 
 #### Kanban Board (Date-wise)
-![](./src/assets/Kanban.png)
+![](./src/assets/images/Kanban.png)
 
 
 
