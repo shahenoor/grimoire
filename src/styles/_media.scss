@@ -1,0 +1,15 @@
+// Define mixins for specific breakpoints
+
+//Tablet Breakpoint
+@mixin tablet {
+    @media (min-width: 768px) {
+      @content;
+    }
+}
+  
+//Desktop Breakpoint
+@mixin desktop {
+    @media (min-width: 1280px) {
+      @content;
+    }
+}
