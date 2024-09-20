@@ -1,5 +1,6 @@
-import './Header.scss';
 import logo from '../../assets/logo/grimoireLogo.png';
+import { NavLink } from 'react-router-dom';
+import './Header.scss';
 
 function Header() {
   return (
@@ -14,9 +15,21 @@ function Header() {
 
         <nav className='header__nav'>
           <ul className='header__nav__list'>
-            <li className='header__nav__item'>Home</li>
-            <li className='header__nav__item'>Calendar</li>
-            <li className='header__nav__item'>Board</li>
+            <NavLink to="/" className='header__nav-link'>
+              {({ isActive }) => (
+                <li className={`header__nav__item ${isActive ? 'header__nav__item--active' : ''}`}>Home</li>
+              )}
+            </NavLink>
+            <NavLink to="/calendar" className='header__nav-link'>
+              {({ isActive }) => (
+                <li className={`header__nav__item ${isActive ? 'header__nav__item--active' : ''}`}>Calendar</li>
+              )}
+            </NavLink>
+            <NavLink to="/board" className='header__nav-link'>
+              {({ isActive }) => (
+                <li className={`header__nav__item ${isActive ? 'header__nav__item--active' : ''}`}>Board</li>
+              )}
+          </NavLink>
           </ul>
 
           <div className='header__avatar-container'>

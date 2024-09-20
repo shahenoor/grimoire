@@ -52,6 +52,10 @@
             gap: 2rem;
         }
 
+        &-link {
+            text-decoration: none;
+        }
+
         &__list {
             display: none;
 
@@ -70,6 +74,10 @@
               @include dt-header-nav;
               color: $grimoire-dark-brown;
               font-weight: 600;
+            }
+
+            &--active {
+                color: $grimoire-teal;
             }
         }
     }
