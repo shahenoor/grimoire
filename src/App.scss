@@ -16,3 +16,14 @@
 body {
     background-color: $grimoire-background;
 }
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the app container takes the full viewport height */
+  }
+  
+  .main-content {
+    flex: 1; /* Allows the main content to grow */
+    padding-bottom: 60px; /* Add space to prevent content from hiding under the footer */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+  }
