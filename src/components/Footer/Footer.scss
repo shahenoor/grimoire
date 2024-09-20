@@ -1,0 +1,36 @@
+.footer {
+    @include flex-direction(row);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: $grimoire-header; 
+    box-shadow: 0 -5px 5px -5px rgba($grimoire-grey, 0.15);
+    z-index: 1000; 
+    padding: 10px 0; 
+    gap: 2rem;
+    @include flex-layout(center,center);
+
+    &__icon {
+        @include flex-direction(column);
+        @include flex-layout(center,center);
+        text-decoration: none;
+        &-img {
+            width: 36px;
+            height: 36px;
+        }
+    }
+
+    &__text {
+        color : $grimoire-dark-brown;
+        font-weight: 600;
+
+        &--active {
+            color: $grimoire-teal;
+        }
+    }
+
+    @include tablet {
+        display: none;
+    }
+}

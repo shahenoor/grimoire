@@ -1,0 +1,77 @@
+
+.MuiDateCalendar-root {
+    @include tablet{
+        width: 768px !important; 
+        padding: 1rem;
+    }
+}
+
+.MuiDayCalendar-header {
+    display: flex !important;
+    margin-left: 1.2rem;
+    justify-content: flex-start !important;
+    width: 280px !important;
+    background-color: rgba($grimoire-dark-brown, 0.2) !important;
+
+    @include tablet{
+        width: 670px !important;
+        gap: 4rem;
+        margin-left: 2rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.MuiDayCalendar-monthContainer {
+    @include tablet{
+        width: 768px !important;
+        margin-left: 2rem;
+    }
+}
+
+.MuiDayCalendar-weekContainer {
+    @include tablet{
+        width: 768px !important;
+        justify-content: flex-start !important;
+        gap: 4rem;
+        margin-bottom: 1rem !important;
+    }
+}
+
+.MuiPickersCalendarHeader-label {
+    font-family: 'EB Garamond', serif !important;
+    @include tablet{
+        @include dt-calender-header; 
+        font-weight: 600;
+        color: $grimoire-dark-brown;
+    }
+}
+
+.MuiPickersCalendarHeader-root {
+    @include tablet{
+        margin-bottom: 2rem !important;
+    }
+}
+
+.MuiDayCalendar-weekDayLabel {
+    font-family: 'EB Garamond', serif !important;
+    @include tablet{
+        font-weight: 700 !important;
+        @include dt-calender-week-label; 
+        color: $grimoire-dark-brown;
+    }
+}
+
+.MuiPickersDay-root {
+    font-family: 'EB Garamond', serif !important;
+    @include tablet{
+        font-weight: 400 !important;
+        @include dt-calender-week-label; 
+        color: $grimoire-dark-brown;
+    }
+}
+
+
+
+.Mui-selected {
+    background-color: $grimoire-teal !important;
+}

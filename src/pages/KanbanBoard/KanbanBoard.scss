@@ -1,0 +1,61 @@
+.board {
+
+
+    &__date-wrapper {
+        display: flex; 
+        justify-content: center; 
+        align-items: center;   
+    }
+
+    &__date {
+        @include header-nav;
+        padding:  0.5rem 1rem;
+        border-left: 1px solid rgba($grimoire-dark-brown, 0.5);
+        border-right: 1px solid rgba($grimoire-dark-brown, 0.5);
+        border-bottom: 1px solid rgba($grimoire-dark-brown, 0.5);
+        background-color:  rgba($grimoire-dark-brown, 0.7);
+        color: white;
+        font-weight: 600;
+        @include tablet{
+            @include dt-calender-header;
+            
+        }
+       
+    }
+
+    &__inner {
+        @include flex-direction(row);
+        overflow-x: auto;
+        display: flex;
+        width: 100%;
+        border: 1px solid rgba($grimoire-grey, 0.5);
+        margin: 1rem;
+        box-sizing: border-box;
+
+        @include tablet {
+            margin: 2rem;
+        }
+    }
+
+    &__float-button{
+
+        display: none;
+        @include tablet {
+            @include flex-layout(center, center);
+            position:fixed;
+            width:60px;
+            height:60px;
+            bottom:70px;
+            right:70px;
+            background-color:$grimoire-teal;
+            color:#FFF;
+            border-radius:20px;
+            border: none;
+            text-align:center;
+            box-shadow: 2px 2px 3px $grimoire-grey;
+        }
+        
+    }
+   
+    
+}
