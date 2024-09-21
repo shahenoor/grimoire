@@ -1,5 +1,3 @@
-// 20240914_create_jobs_table.js
-
 export function up(knex) {
     return knex.schema.createTable('jobs', function(table) {
       table.increments('id').primary(); 
@@ -7,7 +5,8 @@ export function up(knex) {
       table.string('company').notNullable(); 
       table.string('location').nullable();
       table.text('description'); 
-      table.timestamp('applied_at').notNullable();
+      table.timestamp('applied_at').nullable();
+      table.timestamp('url').nullable();
       table.timestamp('creation_date').notNullable();
       table.timestamp('deadline').nullable();
       table.string('color').notNullable();
@@ -28,3 +27,4 @@ export function up(knex) {
     return knex.schema.dropTable('jobs'); // Rollback: drop the jobs table
   };
   
+

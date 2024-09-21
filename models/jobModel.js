@@ -8,7 +8,9 @@ export const getJobById = ( req, jobId) => {
 // Get the total job count for a specified month
 export const getJobsByMonth = ( req, userId, month) => {
     return req.knexDb("jobs").where({ user_id: userId })
-    .andWhere(req.knexDb.raw('DATE_FORMAT(creation_date, "%Y-%m") = ?', [month])).count();
+    .andWhere(req.knexDb.raw('DATE_FORMAT(creation_date, "%Y-%m") = ?', [month]))
+    .select(req.knexDb.raw('DAY(creation_date) as day'), req.knexDb.raw('COUNT(*) as job_count'))
+    .groupBy('day');
 }
 
 // Get all the jobs for a specified date
