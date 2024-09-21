@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { DndContext, useSensors, useSensor, MouseSensor, TouchSensor } from '@dnd-kit/core';
 import JobCard from '../../components/JobCard/JobCard';
 import KanbanColumn from '../../components/KanbanColumn/KanbanColumn';
+import AddNewJobModal from '../../components/AddNewJobModal/AddNewJobModal';
 import add from '@assets/icons/add.svg';
 import './KanbanBoard.scss';
 
 function KanbanBoard() {
     const containers = ['Wishlist', 'Applied', 'Interview', 'Offer', 'Rejection'];
+    const [buttonPopUp, setButtonPopUp] = useState(false);
+   
     const [items, setItems] = useState({
       Wishlist: [],
       Applied: [],
@@ -40,7 +43,15 @@ function KanbanBoard() {
         [container]: [...prev[container], { id: newId, content: `New Job ${newId}` }]
       }));
     }  
-  
+    
+    const handleNavigation = (() => {
+      setButtonPopUp(true);
+    })
+
+    const handlePopUpClose = (() => {
+      setButtonPopUp(false);
+    })
+
     return (
       <>
       <DndContext  sensors={sensors} onDragEnd={handleDragEnd}>
@@ -62,9 +73,10 @@ function KanbanBoard() {
           </div>
         </section>
       </DndContext>
-      <button className='board__float-button'>
+      <button className='board__float-button' onClick={handleNavigation}>
         <img src={add}/>
       </button>
+      <AddNewJobModal trigger={buttonPopUp} setTrigger={handlePopUpClose}/>
     </>
     );
   }
