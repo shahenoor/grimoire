@@ -1,16 +1,20 @@
 import { useDroppable } from '@dnd-kit/core';
+import { useState } from 'react';
 import wishlist from '@assets/icons/wishlist.svg';
 import applied from '@assets/icons/applied.svg';
 import interview from '@assets/icons/interview.svg';
 import offer from '@assets/icons/offer.svg';
 import rejection from '@assets/icons/rejection.svg';
 import add from '@assets/icons/add.svg';
+import AddNewJobModal from '../../components/AddNewJobModal/AddNewJobModal';
 import './KanbanColumn.scss';
 
 function KanbanColumn(props) {
     const { isOver, setNodeRef } = useDroppable({
         id: props.id,
     });
+
+    const [buttonPopUp, setButtonPopUp] = useState(false);
     
     const icons = {
       Wishlist: wishlist,
@@ -23,8 +27,17 @@ function KanbanColumn(props) {
     const getClassName = () => {
         return `column__droppable-area ${isOver ? 'column__droppable-area--over' : ''}`;
     };
+
+    const handleNavigation = (() => {
+      setButtonPopUp(true);
+    })
+
+    const handlePopUpClose = (() => {
+      setButtonPopUp(false);
+    })
     
     return (
+      <>
       <section ref={setNodeRef} className='column'>
           <div className='column__header'>
              <div className='column__details'>
@@ -41,11 +54,14 @@ function KanbanColumn(props) {
               </div> 
              
           </div>
-          <button className='column__button' onClick = {() => props.addCard(props.id)}><img src={add}/></button>
+          <button className='column__button' onClick = {handleNavigation}><img src={add}/></button>
+          {/* <button className='column__button' onClick = {() => props.addCard(props.id)}><img src={add}/></button> */}
           <div className={getClassName()}>
             {props.children}
           </div>
       </section>
+       <AddNewJobModal trigger={buttonPopUp} setTrigger={handlePopUpClose} addCard = {props.addCard} id={props.id} />
+      </>
     );
 }
 

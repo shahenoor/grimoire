@@ -11,6 +11,24 @@ function AddNewJobModal(props) {
     const [blockPickerColor, setBlockPickerColor] = useState("#FF8A65");
     const [showPicker, setShowPicker] = useState(false); 
 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const company = e.target.company.value; 
+        const title = e.target.jobTitle.value;
+    
+        if(props.id === 'Rejection'){
+            props.addCard('Wishlist', title, company, blockPickerColor);
+            props.setTrigger(false);
+        }
+        else{
+            props.addCard(props.id, title, company, blockPickerColor);
+            props.setTrigger(false);
+        }
+       
+        
+    }
+
     return props.trigger ? (
         <section className="modal">
             <div className="modal__overlay"></div>
@@ -20,7 +38,7 @@ function AddNewJobModal(props) {
                     <button className='modal__button'></button>
                 </header>
                 <main className="modal__form-wrapper">
-                <form className="modal-form">
+                <form className="modal-form" onSubmit={handleSubmit}>
                     
                     <div className='modal-form__row'>
 
@@ -78,7 +96,7 @@ function AddNewJobModal(props) {
                                 <option value="rejected">Rejected</option>
                             </select>
                         </div>
-                        <div className='modal-form__input-wrapper'>
+                        <div className='modal-form__input-wrapper modal-form__color-wrapper'>
                             <label htmlFor="color-input" className="modal-form__label">
                                 Color
                             </label>
@@ -90,8 +108,8 @@ function AddNewJobModal(props) {
                                      cursor: 'pointer',
                                     border: "2px solid white",
                                 }}
-                                onClick={() => setShowPicker(!showPicker)}
-                                ></div>
+                                onClick={() => setShowPicker(!showPicker)} className='modal__color'
+                                >
                                 {showPicker && (   
                                     <div className='modal__color-picker'> 
                                         <BlockPicker
@@ -101,7 +119,9 @@ function AddNewJobModal(props) {
                                             
                                         }} />
                                     </div>
+                                    
                                 )}
+                                </div>
                         </div>
                     </div>
                     <div className='modal-form__text-editor'>

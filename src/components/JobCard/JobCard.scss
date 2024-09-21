@@ -1,0 +1,57 @@
+.card {
+   // margin: 8px;
+   padding: 0.5rem 0.5rem ;
+    border: 1px solid #ccc;
+    position: relative;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+   
+
+    &:hover {
+        border: 2px solid $grimoire-teal;
+        cursor: pointer;
+        .card__right-wrapper {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
+    &__job-title {
+        color: $grimoire-dark-brown;
+        @include  dt-header-nav ;
+        line-height: 20px;
+        letter-spacing: 0.2px;
+    }
+
+    &__company {
+        color: rgba($grimoire-dark-brown, 0.7);
+        @include  dt-header-nav ;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    &__content {
+        @include flex-direction(row);
+        @include flex-layout(space-between, center);
+        border-left: 3px solid $grimoire-dark-brown;
+        padding: 0.5rem 0;
+    }
+
+    &__left-wrapper {
+        @include flex-direction(column);
+        padding-left: 16px;
+    }
+    &__right-wrapper {
+        position: absolute; 
+        top: 60px; 
+        right: 16px; 
+        transform: translateY(-50%); 
+        display: flex; 
+        gap: 8px; 
+        opacity: 0;
+        pointer-events: none; 
+        transition: opacity 0.3s ease; 
+    }
+
+    
+}

@@ -90,12 +90,16 @@
       }
     }
 
+    &__color {
+      position: relative;
+    }
+
     &__color-picker {
       @include tablet {
           position: absolute; 
           z-index: 1000; 
-          bottom: 170px;
-          right: 150px;
+          top: 50px; 
+          left: -45px;
       }
       
 
