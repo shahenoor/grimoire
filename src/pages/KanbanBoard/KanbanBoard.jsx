@@ -51,6 +51,7 @@ function KanbanBoard() {
       Rejection: []
     });
     
+    
     const updateJobStatus = debounce(async (jobId, newStatus) => {
       try {
         await apiClient.updateJobStatus(jobId, newStatus);
