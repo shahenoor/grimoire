@@ -61,9 +61,6 @@ class ApiClient {
     // Post a new Job Application
     async createJob(formData) {
         try {
-            for (let [key, value] of formData.entries()) {
-                console.log(`Key: ${key}, Value: ${value}`);
-              }
             const response = await axios.post(
                 `${this.baseUrl}/api/jobs`, formData, { headers: {
                     'Content-Type': 'application/json'
@@ -80,12 +77,29 @@ class ApiClient {
     async updateJob(id, job) {
         try {
             const response = await axios.put(
-                `${this.baseUrl}/api/jobs/${id}`, job   
+                `${this.baseUrl}/api/jobs/${id}`, job , { headers: {
+                    'Content-Type': 'application/json'
+                  }} 
             );
 
             return response.data;
         }catch(error) {
             console.error('Failed to update job application:', error);
+        }
+    }
+
+    // Update Job Application Status
+    async updateJobStatus(id, status) {
+        try {
+            const response = await axios.put(
+                `${this.baseUrl}/api/jobs/${id}/status/${status}` , { headers: {
+                    'Content-Type': 'application/json'
+                  }} 
+            );
+
+            return response.data;
+        }catch(error) {
+            console.error('Failed to update job application status:', error);
         }
     }
 

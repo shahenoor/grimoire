@@ -60,7 +60,7 @@ function KanbanColumn(props) {
             {props.children}
           </div>
       </section>
-       <AddNewJobModal trigger={buttonPopUp} setTrigger={handlePopUpClose} addCard = {props.addCard} id={props.id} />
+       <AddNewJobModal trigger={buttonPopUp} setTrigger={handlePopUpClose} addCard = {props.addCard} id={props.id}  date={props.date} />
       </>
     );
 }

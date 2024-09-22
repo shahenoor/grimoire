@@ -1,8 +1,6 @@
 .card {
-   // margin: 8px;
-   padding: 0.5rem 0.5rem ;
+    padding: 0.5rem 0.5rem ;
     border: 1px solid #ccc;
-    position: relative;
     border-radius: 4px;
     background-color: #f0f0f0;
     margin-bottom: 10px;
@@ -42,11 +40,8 @@
         padding-left: 16px;
     }
     &__right-wrapper {
-        position: absolute; 
-        top: 60px; 
-        right: 16px; 
-        transform: translateY(-50%); 
         display: flex; 
+        margin-top: 2rem;
         gap: 8px; 
         opacity: 0;
         pointer-events: none; 

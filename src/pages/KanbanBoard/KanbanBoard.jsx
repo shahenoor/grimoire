@@ -1,4 +1,5 @@
 import React, { useEffect, useState} from 'react';
+import debounce from 'lodash.debounce'; 
 import { DndContext, useSensors, useSensor, MouseSensor, TouchSensor } from '@dnd-kit/core';
 import JobCard from '../../components/JobCard/JobCard';
 import { v4 as uuidv4 } from 'uuid';
@@ -36,8 +37,9 @@ const formatDate = (date, month, year) => {
 function KanbanBoard() {
     const location = useLocation();
     const { date, month, year } = location.state || {};
-    const { longFormat, shortFormat } = formatDate(date, month, year);
-    const [selectedItem, setSelectedItem] = useState(null);
+    const currentDate = dayjs().format('YYYY-MM-DD');
+
+    const { longFormat, shortFormat } = date && month && year ? formatDate(date, month, year) : formatDate(dayjs().date(), dayjs().month() + 1, dayjs().year());
     const containers = ['Wishlist', 'Applied', 'Interview', 'Offer', 'Rejection'];
     const [buttonPopUp, setButtonPopUp] = useState(false);
    
@@ -49,6 +51,15 @@ function KanbanBoard() {
       Rejection: []
     });
     
+    const updateJobStatus = debounce(async (jobId, newStatus) => {
+      try {
+        await apiClient.updateJobStatus(jobId, newStatus);
+        console.log('Job status updated successfully');
+      } catch (error) {
+        console.error('Error updating job status:', error);
+      }
+    }, 500);
+
     function handleDragEnd(event) {
       const { active, over } = event;
       
@@ -58,6 +69,7 @@ function KanbanBoard() {
           const draggedItem = newItems[active.data.current.parent].find(item => item.id === active.id);
           newItems[active.data.current.parent] = newItems[active.data.current.parent].filter(item => item.id !== active.id);
           newItems[over.id].push(draggedItem);
+          updateJobStatus(draggedItem.id, over.id);
           return newItems;
         });
       }
@@ -77,8 +89,10 @@ function KanbanBoard() {
     );
 
     const getJobByDate = async () => {
+      
       try {
-         const data = await apiClient.getJobByDate(1, shortFormat);
+        const dateToUse = shortFormat || currentDate;
+        const data = await apiClient.getJobByDate(1, dateToUse);
          
          const jobsByColumn = data.reduce((acc, job) => {
             const columnKey = job.status || 'Wishlist'; 
@@ -105,16 +119,24 @@ function KanbanBoard() {
      getJobByDate();
     }, [shortFormat]);
 
-    function addCard(container) {
+    function addCard(container, item) {
       const newId = uuidv4();
       setItems((prev) => ({
         ...prev,
-        [container]: [...prev[container], { id: newId }]
+        [container]: [...prev[container], { id: newId , ...item }]
       }));
     }  
+
+    const updateCard = (columnId, updatedCardData) => {
+      setItems((prevItems) => ({
+          ...prevItems,
+          [columnId]: prevItems[columnId].map((card) =>
+              card.id === updatedCardData.id ? { ...card, ...updatedCardData } : card
+          ),
+      }));
+  }; 
     
     const handleNavigation = (() => {
-      setSelectedItem(item);
       setButtonPopUp(true);
     })
 
@@ -131,13 +153,12 @@ function KanbanBoard() {
           </div>
           <div className='board__inner'>
             {containers.map((id) => (
-              <KanbanColumn key={id} id={id} addCard = {addCard}>
+              <KanbanColumn key={id} id={id} addCard = {addCard} date={shortFormat}>
                 {items[id].map((item) => (
-                  <JobCard key={item.id} id={item.id} parent={id} item={item}>
+                  <JobCard key={item.id} id={item.id} parent={id} item={item}  updateCard={updateCard} date={shortFormat}>
                     {item.content}
                   </JobCard>
                 ))}
-                {/* <button onClick={() => addCard(id)}>Add Card</button> */}
               </KanbanColumn>
             ))}
           </div>
@@ -150,8 +171,7 @@ function KanbanBoard() {
         trigger={buttonPopUp} 
         setTrigger={handlePopUpClose} 
         addCard={addCard} 
-        item={selectedItem} 
-        id={selectedItem ? selectedItem.status : 'Wishlist'} 
+        date={shortFormat}
       />
     </>
     );

@@ -23,7 +23,6 @@ body {
   }
   
   .main-content {
-    flex: 1; /* Allows the main content to grow */
-    padding-bottom: 60px; /* Add space to prevent content from hiding under the footer */
-    overflow-y: auto; /* Allow vertical scrolling if needed */
+    flex: 1; 
+    overflow-y: auto; 
   }

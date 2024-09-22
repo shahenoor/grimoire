@@ -39,16 +39,20 @@
 
 //DESKTOP AND TABLET TEXT STYLES
 @mixin dt-header-title {
-    font-size: 2rem;
-    line-height: 2.5rem;
+    font-size: 2rem !important; // !important is required to give this font to the Monthly Calendar MUI component
+    line-height: 2.5rem !important;
+}
+@mixin dt-header-sub-title {
+    font-size: 1.5rem!important; // !important is required to give this font to the Monthly Calendar MUI component
+    line-height: 2.5rem !important;
 }
 @mixin dt-header-nav {
-    font-size: 1.2rem;
-    line-height: 2rem;
+    font-size: 1.2rem !important;
+    line-height: 2rem !important;
 }
 @mixin dt-calender-header{
-    font-size: 1.5rem;
-    line-height: 1.375rem;
+    font-size: 1.5rem !important;
+    line-height: 1.375rem !important;
 }
 @mixin dt-calender-week-label {
     font-size: 1.2rem !important;

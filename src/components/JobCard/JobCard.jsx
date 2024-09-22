@@ -1,17 +1,20 @@
-import { DndContext, useDraggable, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
+import {useDraggable} from '@dnd-kit/core';
 import deleteIcon from '@assets/icons/delete.svg';
 import linkIcon from '@assets/icons/link.svg';
-import AddNewJobModal from '../AddNewJobModal/AddNewJobModal';
+import EditJobModal from '../EditJobModal/EditJobModal';
 import './JobCard.scss';
 import { useState } from 'react';
 
 function JobCard(props) {
   const [isOpen , setIsOpen] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.id,
     data: {
       parent: props.parent,
-    }
+    },
+    onDragStart: () => setIsDragging(true),
+    onDragEnd: () => setIsDragging(false),
   });
 
   const style = transform ? {
@@ -32,7 +35,7 @@ function JobCard(props) {
   })
   return (
     <>
-      <div ref={setNodeRef} style={{ ...style}} className='card' {...listeners} {...attributes}  onClick={handleOpenModal}>
+      <div ref={setNodeRef} style={{ ...style}}  className={`card ${isDragging ? 'card__is-dragging' : ''}`} {...listeners} {...attributes}  onClick={handleOpenModal}>
        
        <div className='card__content' style={{ ...style_color}}>
           <div className='card__left-wrapper'>
@@ -47,7 +50,7 @@ function JobCard(props) {
       </div> 
       </div>
       {isOpen ? (
-        <AddNewJobModal trigger={isOpen} setTrigger={handlePopUpClose} />
+        <EditJobModal trigger={isOpen} setTrigger={handlePopUpClose} item={props.item} isUpdate = {true} updateCard={props.updateCard} date={props.date}/>
       ) : ''}
     </>
   );
