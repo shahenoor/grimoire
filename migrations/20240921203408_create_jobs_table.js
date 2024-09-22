@@ -6,7 +6,7 @@ export function up(knex) {
       table.string('location').nullable();
       table.text('description'); 
       table.timestamp('applied_at').nullable();
-      table.timestamp('url').nullable();
+      table.string('url').nullable();
       table.timestamp('creation_date').notNullable();
       table.timestamp('deadline').nullable();
       table.string('color').notNullable();

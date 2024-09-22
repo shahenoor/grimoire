@@ -31,30 +31,29 @@ export const getWishlistJobs = ( req, userId) => {
 }
 
 // Create a new Job Application
-export const createJob = ( req, jobDetails) => {
-    const { id, title, company, location, description, applied_at, creation_date, deadline, color, salary, status, user_id } = jobDetails;
+export const createJob = (req) => {
+    const { title, company, location, creation_date, color, status, user_id } = req.body;
     
-    if (!id || !title || !company || !location || !description || !applied_at || !creation_date || !deadline || !color || !salary || !status || !user_id) {
-        return res.status(400).send("Error: Missing properties");
+    if (!title || !company || !location || !creation_date || !color || !status || !user_id) {
+        throw new Error("Error: Missing properties");
     }
-    return req.knexDb("jobs").insert(jobDetails);
+    return req.knexDb("jobs").insert(req.body);
 }
 
 // Update Job Application
-export const updateJob = async ( req, res, jobDetails, jobId) => {
-    const { id, title, company, location, description, applied_at, deadline, color, salary, status } = jobDetails;
+export const updateJob = async ( req, jobId) => {
+    const { title, company, location, description, applied_at, deadline, color, salary, status } = req.body;
     
-    if (!id || !title || !company || !location || !description || !applied_at || !deadline || !color || !salary || !status) {
-        return res.status(400).send("Error: Missing properties");
+    if (!title || !company || !location || !color || !status || !user_id) {
+        throw new Error("Error: Missing properties");
     }
 
     const job = await req.knexDb("jobs").where({ id: jobId }).first();
     if (!job) {
-        return res.status(404).send('Job ID not found');
+        throw new Error('Job ID not found');
     }
 
     await req.knexDb("jobs").where({ id: jobId }).update({
-        id,
         title,
         company,
         location,
@@ -70,11 +69,11 @@ export const updateJob = async ( req, res, jobDetails, jobId) => {
 }
 
 // Delete Job Application 
-export const deleteJob = async ( req, res, jobId ) => {
+export const deleteJob = async ( req, jobId ) => {
     const job = await req.knexDb("jobs").where({ id: jobId }).first();
 
     if (!job) {
-        return res.status(404).send('Job ID not found');
+       throw new Error('Job ID not found');
     }
 
     return req.knexDb("jobs").where({ id: jobId }).del();

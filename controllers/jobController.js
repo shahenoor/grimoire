@@ -72,7 +72,7 @@ export const getWishlistJobs = async (req,res) => {
 
 export const createJob = async (req, res) => {
     try {
-        const newJob = await jobModel.createJob(req, req.body)
+        const newJob = await jobModel.createJob(req)
         res.status(201).json(newJob);
     } catch (error) {
         console.error("Error creating job application", error);
@@ -86,7 +86,7 @@ export const updateJob = async (req, res) => {
         if (!jobId) {
             return res.status(404).send('Job ID not found');
         }
-        const updateJob = await jobModel.updateJob(req, res, req.body, jobId)
+        const updateJob = await jobModel.updateJob(req, jobId)
         res.status(200).json(updateJob);
     } catch (error) {
         console.error("Error updating job application", error);
@@ -97,7 +97,7 @@ export const updateJob = async (req, res) => {
 export const deleteJob = async (req, res) => {
     try {
         const { jobId } = req.params; 
-        const deleteJob = await jobModel.deleteJob(req, res, jobId)
+        const deleteJob = await jobModel.deleteJob(req, jobId)
         res.status(200).json(deleteJob);
     } catch (error) {
         console.error("Error deleting job application", error);

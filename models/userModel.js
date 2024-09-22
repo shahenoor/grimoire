@@ -7,9 +7,9 @@ export const getUserById = ( req, userId) => {
 
 // Create a New User
 export const createUser = ( req, res, userDetails) => {
-    const { id, name, email, password, avatar } = userDetails;
+    const { id, first_name, last_name, email, password, avatar } = userDetails;
     
-    if (!id || !name || !email  || !password || !avatar) {
+    if (!id || !first_name || !last_name || !email  || !password) {
         return res.status(400).send("Error: Missing properties");
     }
     return req.knexDb("users").insert(userDetails);
