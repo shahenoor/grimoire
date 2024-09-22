@@ -59,10 +59,15 @@ class ApiClient {
     }
 
     // Post a new Job Application
-    async createJob(job) {
+    async createJob(formData) {
         try {
+            for (let [key, value] of formData.entries()) {
+                console.log(`Key: ${key}, Value: ${value}`);
+              }
             const response = await axios.post(
-                `${this.baseUrl}/api/jobs`, job
+                `${this.baseUrl}/api/jobs`, formData, { headers: {
+                    'Content-Type': 'application/json'
+                  }}
             );
 
             return response.data;
@@ -74,7 +79,7 @@ class ApiClient {
     // Update Job Application
     async updateJob(id, job) {
         try {
-            const response = await axios.post(
+            const response = await axios.put(
                 `${this.baseUrl}/api/jobs/${id}`, job   
             );
 
@@ -87,7 +92,7 @@ class ApiClient {
     // Delete Job Application
     async deleteJob(id) {
         try {
-            const response = await axios.post(
+            const response = await axios.delete(
                 `${this.baseUrl}/api/jobs/${id}`   
             );
 
@@ -98,5 +103,5 @@ class ApiClient {
     }
 }
 
-const apiClient = new ApiClient(baseUrl,apiKey);
+const apiClient = new ApiClient(baseUrl);
 export default apiClient;

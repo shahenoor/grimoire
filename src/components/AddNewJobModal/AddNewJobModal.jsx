@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
-import './AddNewJobModal.scss';
 import 'react-quill/dist/quill.snow.css';
 import { BlockPicker } from 'react-color';
-
+import dayjs from 'dayjs';
+import apiClient from '../../utils/ApiClient';
+import './AddNewJobModal.scss';
 
 
 function AddNewJobModal(props) {
@@ -12,11 +13,11 @@ function AddNewJobModal(props) {
     const [showPicker, setShowPicker] = useState(false); 
 
 
-    const handleSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
         const company = e.target.company.value; 
-        const title = e.target.jobTitle.value;
-    
+        const title = e.target.title.value;
+        
         if(props.id === 'Rejection'){
             props.addCard('Wishlist', title, company, blockPickerColor);
             props.setTrigger(false);
@@ -25,8 +26,32 @@ function AddNewJobModal(props) {
             props.addCard(props.id, title, company, blockPickerColor);
             props.setTrigger(false);
         }
-       
-        
+
+        const formData = new FormData();
+        const elements = e.target.elements;
+        const currentDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
+
+        for (let element of elements) {
+            if (element.name && element.value) {
+            formData.append(element.name, element.value);
+            }
+        }
+        formData.append('color', blockPickerColor);
+        formData.append('description', value);
+        formData.append('user_id', 1);
+        formData.append('creation_date', currentDate);
+
+        for (let [key, value] of formData.entries()) {
+            console.log(`Key: ${key}, Value: ${value}`);
+          }
+        try {
+            await apiClient.createJob(formData);
+        }
+        catch (error) {
+            console.error('Error submitting Job Application: ', error);
+            alert('Failed to submit the Job Application. Please try again.');
+        }
+                
     }
 
     return props.trigger ? (
@@ -38,7 +63,7 @@ function AddNewJobModal(props) {
                     <button className='modal__button'></button>
                 </header>
                 <main className="modal__form-wrapper">
-                <form className="modal-form" onSubmit={handleSubmit}>
+                <form className="modal-form" onSubmit={handleFormSubmit}>
                     
                     <div className='modal-form__row'>
 
@@ -53,7 +78,7 @@ function AddNewJobModal(props) {
                             <label htmlFor="title-input" className="modal-form__label">
                                 Job Title *
                             </label>
-                            <input type="text" name="jobTitle" className="modal-form__input" size="40" placeholder="Enter job title" />
+                            <input type="text" name="title" className="modal-form__input" size="40" placeholder="Enter job title" />
                         </div>
 
                         <div className='modal-form__input-wrapper'>
