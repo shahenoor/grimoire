@@ -12,6 +12,10 @@ function AddNewJobModal(props) {
     const [blockPickerColor, setBlockPickerColor] = useState("#FF8A65");
     const [showPicker, setShowPicker] = useState(false); 
 
+    if(props.item){
+        console.log(props.item.company);
+    }
+    
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -71,7 +75,7 @@ function AddNewJobModal(props) {
                             <label htmlFor="company" className="modal-form__label">
                                 Company *
                             </label>
-                            <input type="text" name="company" className="modal-form__input" size="30" placeholder="Enter company name" />
+                            <input type="text" name="company" className="modal-form__input" size="30" placeholder="Enter company name"/>
                         </div>
 
                         <div className='modal-form__input-wrapper'>
@@ -114,11 +118,11 @@ function AddNewJobModal(props) {
                                 Status *
                             </label>
                             <select name="status" className="modal-form__select" >
-                                <option value="wishlist">Wishlist</option>
-                                <option value="applied">Applied</option>
-                                <option value="interview">Interview</option>
-                                <option value="offer">Offer</option>
-                                <option value="rejected">Rejected</option>
+                                <option value="Wishlist">Wishlist</option>
+                                <option value="Applied">Applied</option>
+                                <option value="Interview">Interview</option>
+                                <option value="Offer">Offer</option>
+                                <option value="Rejected">Rejected</option>
                             </select>
                         </div>
                         <div className='modal-form__input-wrapper modal-form__color-wrapper'>

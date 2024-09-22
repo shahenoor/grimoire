@@ -7,16 +7,6 @@ import { useState } from 'react';
 
 function JobCard(props) {
   const [isOpen , setIsOpen] = useState(false);
-  const [dragging, setDragging] = useState(false);
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        delay: 1000
-       
-      },
-    })
-  );
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.id,
     data: {
@@ -29,15 +19,12 @@ function JobCard(props) {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' 
   } : undefined;
 
-  const style_color = props.color ? {
-    borderLeft: `3px solid ${props.color}` 
+  const style_color = props.item.color ? {
+    borderLeft: `3px solid ${props.item.color}` 
   } : undefined;
 
   const handleOpenModal = () => {
-   
-      console.log("its going in "); 
-      setIsOpen(true);
-    
+      setIsOpen(true); 
   };
 
   const handlePopUpClose = (() => {
@@ -49,8 +36,8 @@ function JobCard(props) {
        
        <div className='card__content' style={{ ...style_color}}>
           <div className='card__left-wrapper'>
-            <h3 className='card__job-title'>{props.title}</h3>
-            <p className='card__company'>{props.company}</p>
+            <h3 className='card__job-title'>{props.item.title}</h3>
+            <p className='card__company'>{props.item.company}</p>
           </div>
 
           <div className='card__right-wrapper'>

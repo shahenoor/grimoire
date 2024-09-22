@@ -1,89 +1,127 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
-import './MonthlyView.scss'; 
+import apiClient from '../../utils/ApiClient';
+import './MonthlyView.scss';
 
-
-function fetchHardcodedJobData() {
-  return Promise.resolve({
-    daysToHighlight: [1, 5, 15],
-  });
+async function fetchJobDataForMonth(month) {
+  try {
+    const data = await apiClient.getJobByMonth(1, month)
+    const jobsByDay = data.reduce((acc, item) => {
+        acc[item.day] = item.job_count;
+        return acc;
+    }, {});
+    return jobsByDay;
+  }
+  catch (error) {
+    console.error('Error fetching job data:', error);
+    return {};
+  }
 }
 
+const dayColors = [
+  '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FFBD33', '#DAF7A6', 
+  '#FFC300', '#581845', '#C70039', '#900C3F', '#FF5733', '#33FF57', 
+  '#3357FF', '#FF33A1', '#FFBD33', '#DAF7A6', '#FFC300', '#581845', 
+  '#C70039', '#900C3F', '#FF5733', '#33FF57', '#3357FF', '#FF33A1', 
+  '#FFBD33', '#DAF7A6', '#FFC300', '#581845', '#C70039', '#900C3F', 
+  '#FFC300' 
+];
+
+
+const getColorForDay = (day) => {
+  return dayColors[day - 1] || '#CCCCCC'; 
+};
+
+
+
 function ServerDay(props) {
-  const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
-  const isSelected = !outsideCurrentMonth && highlightedDays.includes(day.date());
+  const navigate = useNavigate();
+  const { jobsByDay = {}, day, outsideCurrentMonth, ...other } = props;
+  const badgeColor = getColorForDay(day.date());
+  const jobCount = !outsideCurrentMonth && jobsByDay[day.date()] ? jobsByDay[day.date()] : 0;
+
+  const handleNavigation = (day) => {
+    const date = day.date();
+    const month = day.month() + 1; 
+    const year = day.year();
+
+    navigate('/board', {
+      state: { date, month, year }
+    });
+  }
 
   return (
     <Badge
-      key={props.day.toString()}
+      badgeContent={jobCount}
+      sx={{
+        '& .MuiBadge-badge': {
+          backgroundColor: badgeColor, 
+          color: 'white',
+        },
+      }}
+      invisible={jobCount === 0} 
       overlap="circular"
-      badgeContent={isSelected ? '📌' : undefined} 
     >
-      <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+      <PickersDay {...other} day={day} outsideCurrentMonth={outsideCurrentMonth} onClick={() => handleNavigation(day)} 
+          sx={{ cursor: 'pointer' }}  />
     </Badge>
   );
 }
 
 function MonthlyView() {
   const [selectedDate, setSelectedDate] = React.useState(dayjs());
-  const requestAbortController = React.useRef(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [highlightedDays, setHighlightedDays] = React.useState([]);
+  const [jobsByDay, setJobsByDay] = React.useState({});
 
-  const fetchHighlightedDays = () => {
-    const controller = new AbortController();
-    requestAbortController.current = controller;
+  const fetchJobsForMonth = (month) => {
+    setIsLoading(true);
+    setJobsByDay({});
 
-    fetchHardcodedJobData({ signal: controller.signal }) 
-      .then(({ daysToHighlight }) => {
-        setHighlightedDays(daysToHighlight);
+    fetchJobDataForMonth(month)
+      .then((jobs) => {
+        setJobsByDay(jobs);
         setIsLoading(false);
       })
       .catch((error) => {
-        if (error.name !== 'AbortError') {
-          console.error('Error fetching hardcoded data:', error);
-        }
+        console.error('Error fetching job data:', error);
+        setIsLoading(false);
       });
   };
 
   React.useEffect(() => {
-    fetchHighlightedDays(); 
-    return () => requestAbortController.current?.abort(); 
-  }, []);
+    fetchJobsForMonth(selectedDate.format('YYYY-MM'));
+  }, [selectedDate]);
 
-  const handleMonthChange = () => {
-    if (requestAbortController.current) {
-      requestAbortController.current.abort();
-    }
-    setIsLoading(true);
-    setHighlightedDays([]);
-    fetchHighlightedDays(); 
+  const handleMonthChange = (newMonth) => {
+    setSelectedDate(newMonth);
+    fetchJobsForMonth(newMonth.format('YYYY-MM'));
   };
 
   const handleDateChange = (newDate) => {
-    setSelectedDate(newDate); 
+    setSelectedDate(newDate);
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
-        value={selectedDate} 
-        onChange={handleDateChange} 
+        value={selectedDate}
+        onChange={handleDateChange}
         loading={isLoading}
         onMonthChange={handleMonthChange}
         renderLoading={() => <DayCalendarSkeleton />}
         slots={{
-          day: ServerDay, 
+          day: ServerDay,
         }}
         slotProps={{
           day: {
-            highlightedDays,
+            jobsByDay,
           },
         }}
         className="custom-calendar"
