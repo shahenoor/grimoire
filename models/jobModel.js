@@ -44,10 +44,6 @@ export const createJob = (req) => {
 export const updateJob = async ( req, jobId) => {
     const { title, company, location, description, applied_at, deadline, color, salary, status } = req.body;
     
-    if (!title || !company || !location || !color || !status || !user_id) {
-        throw new Error("Error: Missing properties");
-    }
-
     const job = await req.knexDb("jobs").where({ id: jobId }).first();
     if (!job) {
         throw new Error('Job ID not found');
@@ -62,6 +58,18 @@ export const updateJob = async ( req, jobId) => {
         deadline,
         color,
         salary,
+        status,
+        updated_at: req.knexDb.fn.now(),
+    });
+    return req.knexDb("jobs").where({ id: jobId}).first();
+}
+
+export const updateJobStatus = async ( req, jobId, status) => {
+    const job = await req.knexDb("jobs").where({ id: jobId }).first();
+    if (!job) {
+        throw new Error('Job ID not found');
+    }
+    await req.knexDb("jobs").where({ id: jobId }).update({
         status,
         updated_at: req.knexDb.fn.now(),
     });

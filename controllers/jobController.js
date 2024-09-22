@@ -94,6 +94,21 @@ export const updateJob = async (req, res) => {
     }
 };
 
+export const updateJobStatus = async (req, res) => {
+    try {
+        const { jobId } = req.params; 
+        const { status } = req.params; 
+        if (!status) {
+            return res.status(404).send('Status is required');
+        }
+        const updateJobStatus = await jobModel.updateJobStatus(req, jobId, status)
+        res.status(200).json(updateJobStatus);
+    } catch (error) {
+        console.error("Error updating job application status", error);
+        res.status(400).send("Error updating job aplication status");
+    }
+};
+
 export const deleteJob = async (req, res) => {
     try {
         const { jobId } = req.params; 
