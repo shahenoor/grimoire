@@ -20,17 +20,9 @@ Additionally, users need reminders and progress tracking to stay on top of the a
 
 1. Daily Job Tracking: Users can easily track applications, interviews, and offers, all displayed in a day-to-day log or calendar format.
 
-2. Application Sheet: A text editor allows users to paste job descriptions, and NLP extracts key details into editable fields for easy management.
+2. Kanban Board: Organize job applications visually through a drag-and-drop kanban system with stages like Wishlist, Applied, Interview, Offer, and Rejected.
+   
+3. Monthly View: See a high-level overview of your job search progress with a calendar that highlights job applications, interviews, and deadlines for each day.
 
-3. Kanban Board: Organize job applications visually through a drag-and-drop kanban system with stages like Wishlist, Applied, Interview, Offer, and Rejected.
 
-4. Reminders for Deadlines: Set and receive notifications for job application deadlines, interviews, and follow-up tasks to stay on top of the process.
-
-5. Feature Extraction from Pasted Job Details: Automatically extract important job details from copy-pasted descriptions to populate job fields.
-
-6. Monthly View: See a high-level overview of your job search progress with a calendar that highlights job applications, interviews, and deadlines for each day.
-
-7. Progress Dashboard: Track and analyze job search progress, including the number of applications, interviews, and offers through a visual dashboard.
-
-8. Notifications/Reminders: Receive notifications for application deadlines and other key milestones, ensuring nothing is missed in the job search.
 
