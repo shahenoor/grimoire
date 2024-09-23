@@ -10,9 +10,9 @@ import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import apiClient from '../../utils/ApiClient';
 import './MonthlyView.scss';
 
-async function fetchJobDataForMonth(month) {
+async function fetchJobDataForMonth(month, userId) {
   try {
-    const data = await apiClient.getJobByMonth(1, month)
+    const data = await apiClient.getJobByMonth(userId, month)
     const jobsByDay = data.reduce((acc, item) => {
         acc[item.day] = item.job_count;
         return acc;
@@ -79,12 +79,13 @@ function MonthlyView() {
   const [selectedDate, setSelectedDate] = React.useState(dayjs());
   const [isLoading, setIsLoading] = React.useState(false);
   const [jobsByDay, setJobsByDay] = React.useState({});
+  const userId = localStorage.getItem('userId'); 
 
   const fetchJobsForMonth = (month) => {
     setIsLoading(true);
     setJobsByDay({});
 
-    fetchJobDataForMonth(month)
+    fetchJobDataForMonth(month, userId)
       .then((jobs) => {
         setJobsByDay(jobs);
         setIsLoading(false);

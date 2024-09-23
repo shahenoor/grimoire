@@ -55,7 +55,6 @@ function KanbanBoard() {
     const updateJobStatus = debounce(async (jobId, newStatus) => {
       try {
         await apiClient.updateJobStatus(jobId, newStatus);
-        console.log('Job status updated successfully');
       } catch (error) {
         console.error('Error updating job status:', error);
       }
@@ -90,10 +89,10 @@ function KanbanBoard() {
     );
 
     const getJobByDate = async () => {
-      
+      const userId = localStorage.getItem('userId'); 
       try {
         const dateToUse = shortFormat || currentDate;
-        const data = await apiClient.getJobByDate(1, dateToUse);
+        const data = await apiClient.getJobByDate(userId, dateToUse);
          
          const jobsByColumn = data.reduce((acc, job) => {
             const columnKey = job.status || 'Wishlist'; 
@@ -128,6 +127,13 @@ function KanbanBoard() {
       }));
     }  
 
+    const deleteJob = (jobId, columnId) => {
+      setItems((prev) => ({
+        ...prev,
+        [columnId]: prev[columnId].filter((item) => item.id !== jobId)
+      }));
+    };
+
     const updateCard = (columnId, updatedCardData) => {
       setItems((prevItems) => ({
           ...prevItems,
@@ -156,7 +162,7 @@ function KanbanBoard() {
             {containers.map((id) => (
               <KanbanColumn key={id} id={id} addCard = {addCard} date={shortFormat}>
                 {items[id].map((item) => (
-                  <JobCard key={item.id} id={item.id} parent={id} item={item}  updateCard={updateCard} date={shortFormat}>
+                  <JobCard key={item.id} id={item.id} parent={id} item={item}  updateCard={updateCard} date={shortFormat} deleteJob={deleteJob}>
                     {item.content}
                   </JobCard>
                 ))}

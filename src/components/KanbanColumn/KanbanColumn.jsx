@@ -49,7 +49,7 @@ function KanbanColumn(props) {
 
                 <div className='column__info-wrapper'>
                     <h3 className='column__title'>{props.id}</h3>
-                    <p className='column__job-count'>0 JOBS</p>
+                    {/* <p className='column__job-count'>0 JOBS</p> */}
                 </div>
               </div> 
              

@@ -17,6 +17,8 @@ import './EditJobModal.scss';
 function EditJobModal(props) {
     const [value, setValue] = useState('');
     const [isInfo, setIsInfo] = useState(true);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errors, setErrors] = useState({});
     const [isEdit, setIsEdit] = useState(false);
     const quillRef = useRef(null);
     const navigate = useNavigate();
@@ -31,6 +33,23 @@ function EditJobModal(props) {
         location: '',
         status: 'Wishlist',
     });
+
+    const validateForm = (formElements) => {
+        const newErrors = {};
+    
+        if (!formElements.company.value.trim()) {
+          newErrors.company = 'Company is required';
+        }
+        if (!formElements.title.value.trim()) {
+          newErrors.title = 'Job Title is required';
+        }
+        if (!formElements.location.value.trim()) {
+          newErrors.location = 'Location is required';
+        }
+    
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+      };
 
     const handleFormCancel = () => {
        if (props.date) {
@@ -86,7 +105,12 @@ function EditJobModal(props) {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        
+        setIsSubmitted(true);
+
+        if (!validateForm(e.target.elements)) {
+            return; 
+        }
+
         const formData = new FormData();
         const elements = e.target.elements;
         
@@ -110,6 +134,10 @@ function EditJobModal(props) {
         }
                 
     }
+
+    const getInputClass = (name) => {
+        return `modal-form__input ${isSubmitted && errors[name] ? 'modal-form__input--error' : ''}`;
+    };
 
     return props.trigger ? (
         <section className="modal">
@@ -227,16 +255,16 @@ function EditJobModal(props) {
 
                         <div className='modal-form__input-wrapper'>
                             <label htmlFor="company" className="modal-form__label">
-                                Company *
+                                Company  <span className='modal-form__required'>*</span>
                             </label>
-                            <input type="text" name="company" className="modal-form__input" size="30" placeholder="Enter company name" value={formState.company} onChange= {handleInputChange}/>
+                            <input type="text" name="company" className={getInputClass('company')} size="30" placeholder="Enter company name" value={formState.company} onChange= {handleInputChange}/>
                         </div>
 
                         <div className='modal-form__input-wrapper'>
                             <label htmlFor="title-input" className="modal-form__label">
-                                Job Title *
+                                Job Title  <span className='modal-form__required'>*</span>
                             </label>
-                            <input type="text" name="title" className="modal-form__input" size="40" placeholder="Enter job title" value={formState.title} onChange= {handleInputChange}/>
+                            <input type="text" name="title"className={getInputClass('title')} size="40" placeholder="Enter job title" value={formState.title} onChange= {handleInputChange}/>
                         </div>
 
                         <div className='modal-form__input-wrapper'>
@@ -263,13 +291,13 @@ function EditJobModal(props) {
                     <div className='modal-form__row'>
                         <div className='modal-form__input-wrapper'>
                             <label htmlFor="location-input" className="modal-form__label">
-                                Location 
+                                Location  <span className='modal-form__required'>*</span>
                             </label>
-                            <input type="text" name="location" size="30" className="modal-form__input" placeholder="Enter location" value={formState.location} onChange= {handleInputChange}/>
+                            <input type="text" name="location" size="30"  className={getInputClass('location')}  placeholder="Enter location" value={formState.location} onChange= {handleInputChange}/>
                         </div>
                         <div className='modal-form__input-wrapper'>
                             <label htmlFor="status-select" className="modal-form__label">
-                                Status *
+                                Status 
                             </label>
                             <select name="status" className="modal-form__select" value={formState.status} onChange= {handleInputChange}>
                                 <option value="Wishlist">Wishlist</option>

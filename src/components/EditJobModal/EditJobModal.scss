@@ -177,6 +177,11 @@
         @include tablet {
           padding-top: 50px;
         }
+        
+        &__required {
+          color: $grimoire-red;
+        }
+
 
         &__details {
           @include flex-direction(column);

@@ -4,6 +4,7 @@ import linkIcon from '@assets/icons/link.svg';
 import EditJobModal from '../EditJobModal/EditJobModal';
 import './JobCard.scss';
 import { useState } from 'react';
+import apiClient from '../../utils/ApiClient';
 
 function JobCard(props) {
   const [isOpen , setIsOpen] = useState(false);
@@ -33,6 +34,20 @@ function JobCard(props) {
   const handlePopUpClose = (() => {
     setIsOpen(false);
   })
+
+  const handleDeleteJob = async (e) => {
+    e.stopPropagation(); 
+    try {
+      await apiClient.deleteJob(props.item.id);
+      alert("Delete Job Successfully!");
+      props.deleteJob(props.item.id, props.parent); 
+    }
+    catch (error) {
+      console.error("Error deleting job application:", error);
+      alert("Failed to delete job application.");
+    }
+  }
+
   return (
     <>
       <div ref={setNodeRef} style={{ ...style}}  className={`card ${isDragging ? 'card__is-dragging' : ''}`} {...listeners} {...attributes}  onClick={handleOpenModal}>
@@ -44,8 +59,8 @@ function JobCard(props) {
           </div>
 
           <div className='card__right-wrapper'>
-            <img className='card__icon' src={linkIcon}/>
-            <img className='card__icon' src={deleteIcon}/>
+            { props.item.url !== '' ? <a href={props.item.url} onClick={(e) => e.stopPropagation()}><img className='card__icon' src={linkIcon}/></a>  : null}
+            <img className='card__icon' src={deleteIcon} onClick={handleDeleteJob}/>
           </div>
       </div> 
       </div>
