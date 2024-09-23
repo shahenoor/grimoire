@@ -1,0 +1,315 @@
+.header {
+    background-color: $grimoire-header;
+    @include flex-direction(row);
+    @include flex-layout(space-between, center);
+    padding : 1rem;
+    box-shadow: 0 2px 4px rgb($grimoire-grey, 0.15);
+    @include tablet {
+        padding : 1.5rem;
+    }
+
+    @include desktop {
+        padding: 1.5rem 6rem;
+    }
+    &__name {
+        @include flex-direction(row);
+        @include flex-layout(center, center);
+    }
+
+    &__title{
+        color: $grimoire-dark-brown;
+        @include header-title;
+        font-weight: 700;
+        background: linear-gradient(90deg, $grimoire-logo,$grimoire-blue , $grimoire-logo); 
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+
+        @include tablet {
+            @include dt-header-sub-title;
+        }
+
+        &--letter {
+            @include tablet {
+                @include dt-header-title;
+            }
+        }
+
+        
+
+
+    }
+
+    &__logo-container {
+
+        display: none;
+        @include tablet {
+            display: flex;
+            width: 50px;
+            height: 50px;
+            margin-right: 0.5rem;
+        }
+    }
+    &__logo{
+
+        display: none;
+        @include tablet {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    &__nav {
+
+        @include tablet {
+            @include flex-direction(row);
+            @include flex-layout(center, center);
+            gap: 2rem;
+        }
+
+        &-link {
+            text-decoration: none;
+        }
+
+        &__list {
+            display: none;
+
+            @include tablet {
+                list-style: none;
+                @include flex-direction(row);
+                gap: 2rem;
+            }
+        }
+
+        &__item {
+            display: none;
+
+            @include tablet {
+              display: flex;
+              @include dt-header-nav;
+              color: $grimoire-dark-brown;
+              font-weight: 600;
+            }
+
+            &--active {
+                color: $grimoire-teal;
+            }
+        }
+    }
+
+    &__avatar-container {
+        display: flex;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background-color: $grimoire-beige;
+    }
+
+}
+
+.background {
+    background-color: $grimoire-background;
+}
+
+.section {
+    
+    @include flex-direction(column);
+    padding: 1rem;
+
+    @include tablet {
+        padding: 1.5rem;
+    }
+
+    @include desktop {
+        padding: 4rem 6rem 1.5rem 6rem;
+    }
+
+    &__hero {
+        @include flex-direction(row);
+       
+
+        &__wrapper {
+            @include flex-direction(column);
+            @include flex-layout(center, center);
+            padding-left: 50px;
+            width: 100%;
+        }
+
+        &__title {
+            font-size: 32px;
+            width: 800px;
+            letter-spacing: 0.05rem;
+            text-transform: uppercase;
+            padding-bottom: 1rem;
+            color: $grimoire-dark-brown;
+            font-weight: 700;
+            text-align: center;
+        }
+       
+
+        &__highlight-locate {  
+            color: $grimoire-blue;
+        }
+
+        &__highlight-grimoire {  
+            color: $grimoire-purple;
+        }
+
+        &__highlight-track {  
+            text-decoration: underline;
+            text-underline-offset: 8px;
+            color: $grimoire-yellow;
+        }
+
+
+        &__text {
+            display: flex;
+            width: 800px;
+            padding-bottom: 2rem;
+            font-size: 20px;
+            letter-spacing: 0.01rem;
+            color: $grimoire-dark-brown;
+            text-align: center;
+        }
+
+        &__button {
+            font-size: 20px;
+            font-weight: 600;
+            color: $grimoire-dark-brown;
+            width: 130px;
+            border-radius: 10px;
+            height: 40px;
+            background-color: $grimoire-teal;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        &__image-wrapper {
+            height: 400px;
+            width: 500px;
+            background-color: aquamarine;
+            margin-right: 50px;
+        }
+    }
+
+
+    &__feature {
+        padding: 50px;
+        position: relative;
+        z-index: 20;
+        @include flex-direction(row);
+
+        &__image-wrapper, &__wrapper {
+            flex: 1;
+        }
+
+        &__image-wrapper {
+            height: 300px;
+            width: 400px;
+            background-color: aquamarine;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-left: 50px;
+            margin-top: 50px;
+            z-index: 30;
+
+            &--right {
+                margin-right: 40px;
+            }
+        }
+
+        &__image {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        &__wrapper {
+            @include flex-direction(column);
+            @include flex-layout(center, flex-start);
+            z-index: 30;
+            padding-left: 40px;
+        }
+
+        &__tag {
+            font-size: 18px;
+            letter-spacing: 0.01rem;
+            margin-top: 30px;
+            font-weight: 600;
+            color: $grimoire-teal;
+        }
+
+        &__title {
+            font-size: 28px;
+            letter-spacing: 0.01rem;    
+            text-transform: uppercase;
+
+            &--green {
+                color: $grimoire-olive-green;
+            }
+            &--orange {
+                color: $grimoire-orange;
+            }
+            &--blue {
+                color: $grimoire-blue;
+            }
+        }
+
+        &__text {
+            font-size: 20px;
+            letter-spacing: 0.01rem;
+            color: $grimoire-dark-brown;
+            font-weight: 400;
+        }
+
+        &__box {
+            position: absolute;
+            margin-top: 50px;
+            height: 330px;
+            z-index: 10;
+            width: 650px;
+
+            &--right {
+                right: 50px;
+            }
+
+            &--green {
+                border: 8px solid rgba($grimoire-olive-green, 0.2);
+            }
+            &--orange {
+                border: 8px solid rgba($grimoire-orange, 0.2);
+            }
+            &--blue {
+                border: 8px solid rgba($grimoire-blue, 0.2);
+            }
+        }
+    }
+}
+
+
+
+// .spell-circle {
+//     width: 150px;
+//     height: 150px;
+//     display: flex; /* Center the content */
+//     justify-content: center;
+//     align-items: center;
+//     filter: drop-shadow(0 0 25px rgba(#FF00FF, 0.8)); // Increased glow effect
+//   }
+  
+//   .spell-circle img {
+//     width: 100%; /* Ensure the image fills the container */
+//     animation: rotate 50s infinite linear; // Slower rotation
+//   }
+  
+//   @keyframes rotate {
+//     from {
+//       transform: rotate(0deg); // Start position
+//     }
+//     to {
+//       transform: rotate(360deg); // Complete one full rotation
+//     }
+//   }
+  
