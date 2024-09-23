@@ -1,18 +1,35 @@
 import "dotenv/config";
 
+// Get a user by email
+export const getUserByEmail = (req, email) => {
+    return req.knexDb('users').where({ email }).first();
+  };
+
 // Get a user with a specified job id
 export const getUserById = ( req, userId) => {
     return req.knexDb("users").where({ id: userId }).first();
 }
 
 // Create a New User
-export const createUser = ( req, res, userDetails) => {
-    const { id, first_name, last_name, email, password, avatar } = userDetails;
+export const createUser = async ( req, userDetails) => {
+    const { first_name, last_name, email, password, avatar } = userDetails;
     
-    if (!id || !first_name || !last_name || !email  || !password) {
+    if (!first_name || !last_name || !email  || !password) {
         return res.status(400).send("Error: Missing properties");
     }
-    return req.knexDb("users").insert(userDetails);
+    try {
+        await req.knexDb("users").insert({
+            email,
+            password,
+            first_name,
+            last_name,
+          });
+        const newUser = await req.knexDb("users").where({ email }).first();
+        return newUser;
+    } catch (error) {
+        console.error("Error creating new user", error);
+        throw new Error("Error creating new user");
+      }
 }
 
 // Update User Information

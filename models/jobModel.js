@@ -42,7 +42,7 @@ export const createJob = (req) => {
 
 // Update Job Application
 export const updateJob = async ( req, jobId) => {
-    const { title, company, location, description, applied_at, deadline, color, salary, status } = req.body;
+    const { title, company, location, url, description, applied_at, deadline, color, salary, status } = req.body;
     
     const job = await req.knexDb("jobs").where({ id: jobId }).first();
     if (!job) {
@@ -55,6 +55,7 @@ export const updateJob = async ( req, jobId) => {
         location,
         description,
         applied_at,
+        url,
         deadline,
         color,
         salary,

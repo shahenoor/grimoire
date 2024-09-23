@@ -1,4 +1,67 @@
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import * as userModel from '../models/userModel.js';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
+
+export const signup = async (req, res) => {
+    try {
+      const { email, password, first_name, last_name } = req.body;
+  
+      const existingUser = await userModel.getUserByEmail(req, email);
+      if (existingUser) {
+        return res.status(400).json({ message: 'User already exists' });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      const [newUserId] = await userModel.createUser(req, {
+        email,
+        password: hashedPassword,
+        first_name,
+        last_name,
+      });
+
+      const newUser = await userModel.getUserById(req, newUserId);
+  
+      const token = jwt.sign({ id: newUser.id }, JWT_SECRET , {
+        expiresIn: '1h',
+      });
+  
+      res.status(201).json({ token, user: newUser });
+    } catch (error) {
+      console.error('Error during signup', error);
+      if (!res.headersSent) {
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    }
+  };
+  
+  // Login Controller
+  export const login = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+  
+      const user = await userModel.getUserByEmail(req, email);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+  
+      const token = jwt.sign({ id: user.id }, JWT_SECRET, {
+        expiresIn: '1h',
+      });
+  
+      res.status(200).json({ token, user });
+    } catch (error) {
+      console.error('Error during login', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
 
 export const getUserById = async (req,res) => {
     try{
