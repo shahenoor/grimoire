@@ -23,6 +23,7 @@ const LoginPage = ({ setAuthToken }) => {
       navigate('/calendar'); 
     } catch (error) {
       console.error('Login failed:', error.response?.data?.message || error.message);
+      alert("Login failed. Please check your email and password and try again.");
     }
   };
 

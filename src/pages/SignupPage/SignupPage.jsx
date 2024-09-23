@@ -30,6 +30,7 @@ const SignupPage = ({ setAuthToken }) => {
       navigate('/calendar'); 
     } catch (error) {
       console.error('Signup failed:', error.response?.data?.message || error.message);
+      alert("Failed to create an account. Please check your information and try again.");
     }
   };
 
