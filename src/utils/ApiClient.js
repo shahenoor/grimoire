@@ -41,7 +41,7 @@ class ApiClient {
 
             return response.data;
         }catch(error) {
-            console.error('Failed to fetch the job application by date',error);
+            console.error('Failed to fetch the job application by month',error);
         }
     }
 
@@ -112,7 +112,7 @@ class ApiClient {
 
             return response.data;
         }catch(error) {
-            console.error('Failed to update job application:', error);
+            console.error('Failed to delete job application:', error);
         }
     }
 }

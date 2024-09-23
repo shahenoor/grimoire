@@ -8,6 +8,9 @@
         padding : 1.5rem;
     }
 
+    @include desktop {
+        padding: 1.5rem 6rem;
+    }
     &__name {
         @include flex-direction(row);
         @include flex-layout(center, center);
@@ -17,10 +20,25 @@
         color: $grimoire-dark-brown;
         @include header-title;
         font-weight: 700;
+        background: linear-gradient(90deg, $grimoire-logo,$grimoire-blue , $grimoire-logo); 
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
 
         @include tablet {
-            @include dt-header-title;
+            @include dt-header-sub-title;
         }
+
+        &--letter {
+            @include tablet {
+                @include dt-header-title;
+            }
+        }
+
+        
+
+
     }
 
     &__logo-container {
@@ -68,7 +86,7 @@
 
         &__item {
             display: none;
-
+            cursor: pointer;
             @include tablet {
               display: flex;
               @include dt-header-nav;

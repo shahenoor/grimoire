@@ -8,7 +8,7 @@
     box-shadow: 0 -5px 5px -5px rgba($grimoire-grey, 0.15);
     z-index: 1000; 
     padding: 10px 0; 
-    gap: 2rem;
+    gap: 3.5rem;
     @include flex-layout(center,center);
 
     &__icon {
@@ -34,3 +34,49 @@
         display: none;
     }
 }
+
+.footer-desktop {
+    background-color: #f8f3e7;
+    padding: 20px 20px;
+    text-align: center;
+    border-top: 2px solid #b9aa87;
+    color: #4d4637;
+    
+    &__wrapper {
+        @include  flex-direction(row);
+        @include flex-layout(space-between, center);
+        gap: 2rem;
+    }
+
+    &__tagline {
+      font-size: 1rem;
+      margin-top:20px;
+    }
+  
+    &__links {
+      margin-bottom: 10px;
+  
+        &:hover {
+          color: $grimoire-teal;
+        }
+  
+        .footer__icon {
+          margin-right: 8px;
+        }
+    }
+
+    &__link {
+        text-decoration: none;
+        color: #4d4637;
+        font-size: 1.2em;
+        margin: 0 15px;
+        transition: color 0.3s ease;
+  
+    }
+  
+    &__copyright {
+      font-size: 1rem;
+      color: $grimoire-dark-brown;
+      text-align: right;
+    }
+  }
