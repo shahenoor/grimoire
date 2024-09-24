@@ -1,13 +1,15 @@
 // SignupPage.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import './SignupPage.scss';
 
 const SignupPage = ({ setAuthToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -35,36 +37,51 @@ const SignupPage = ({ setAuthToken }) => {
   };
 
   return (
-    <form onSubmit={handleSignup}>
-      <input
-        type="text"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        placeholder="First Name"
-        required
-      />
-      <input
-        type="text"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        placeholder="Last Name"
-        required
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Sign Up</button>
+    <form onSubmit={handleSignup} className='signup-form'>
+      <h1 className='signup-form__tagline'>Ready to make job tracking less of a pain ?</h1>
+      <div className='signup-form__row'>
+        <div className='signup-form__element'>
+          <label className='signup-form__label'>First Name</label>
+          <input className='signup-form__input signup-form__input--first-name' type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Please enter your first name" />
+        </div>
+        <div className='signup-form__element'>
+          <label className='signup-form__label'>Last Name</label>
+          <input className='signup-form__input signup-form__input--last-name' type="text" value={lastName} onChange={(e) => setLastName(e.target.value)}  placeholder="Please enter your last name" />
+        </div>
+      </div>
+     
+     <div className='signup-form__row'>
+      <div className='signup-form__element'>
+        <label className='signup-form__label'>Email</label>
+        <input className='signup-form__input signup-form__input--email' type="email" value={email} onChange={(e) => setEmail(e.target.value)}  placeholder="Please enter your email" />
+      </div>
+      <div className='signup-form__element'>
+        <label className='signup-form__label'>Password</label>
+        <input className='signup-form__input signup-form__input--password' type="password" value={password} onChange={(e) => setPassword(e.target.value)}  placeholder="Please enter your password" />
+      </div>
+     </div>
+
+     <div className='signup-form__row'>
+        <div>
+          <img />
+          <img />
+          <img />
+          <img />
+          <img />
+          <img />
+        </div>
+        
+        <div>
+
+        </div>
+
+     </div>
+
+      <div className='signup-form__actions'>
+        <button type="submit" className='signup-form__actions--button'>Sign up</button>
+        <p className='signup-form__actions--text'> Already have an account?  <NavLink to='/login' className='signup-form__actions--link'>  Log in </NavLink> </p>
+      </div>
+     
     </form>
   );
 };

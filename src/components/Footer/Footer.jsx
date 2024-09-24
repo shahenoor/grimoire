@@ -68,7 +68,7 @@ function Footer() {
           </a>
         </div>
       </div>
-      <p className="footer-desktop__copyright">© 2024 Shahenoor Radhanpuri. All rights reserved.</p>
+      <p className="footer-desktop__copyright">© 2024 Grimoire. All rights reserved.</p>
     </footer>
   )} 
   </>
