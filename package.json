@@ -1,0 +1,26 @@
+{
+  "name": "grimoire-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "migrate": "knex migrate:latest",
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shahenoor Radhanpuri",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.20.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "mysql2": "^3.11.2",
+    "nodemon": "^3.1.4",
+    "uuid": "^10.0.0"
+  }
+}
