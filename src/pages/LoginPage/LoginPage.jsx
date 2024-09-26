@@ -31,7 +31,7 @@ const LoginPage = ({ setAuthToken }) => {
   return (
    
     <form onSubmit={handleLogin} className='login-form'>
-      <h1 className='login-form__tagline'> Ready to Stay on Top of Your Job Hunt ? Log In!</h1>
+      <h1 className='login-form__tagline'> Ready to stay on top of your job hunt ? </h1>
       <div className='login-form__row'>
         <div className='login-form__element'>
           <label className='login-form__label'>Email</label>

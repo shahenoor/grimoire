@@ -77,12 +77,11 @@ function AddNewJobModal(props) {
       formDataObject[key] = value;
     });
     const status = formData.get('status');
-
-    props.addCard(status, formDataObject);
     props.setTrigger(false);
     
     try {
-      await apiClient.createJob(formData);
+      const response = await apiClient.createJob(formData);
+      props.addCard(status, response);
       setIsSubmitted(false);
       props.setTrigger(false);
     } catch (error) {
@@ -148,7 +147,7 @@ function AddNewJobModal(props) {
                   <option value="Applied">Applied</option>
                   <option value="Interview">Interview</option>
                   <option value="Offer">Offer</option>
-                  <option value="Rejected">Rejected</option>
+                  <option value="Rejection">Rejection</option>
                 </select>
               </div>
               <div className='modal-form__input-wrapper modal-form__color-wrapper'>

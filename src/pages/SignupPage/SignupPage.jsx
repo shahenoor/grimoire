@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
+import itachi from '../../assets/images/itachi.png';
+import wonderWoman from '../../assets/images/wonder_woman.png';
+import flash from '../../assets/images/flash.png';
 import './SignupPage.scss';
 
 const SignupPage = ({ setAuthToken }) => {
@@ -61,11 +64,20 @@ const SignupPage = ({ setAuthToken }) => {
       </div>
      </div>
 
-     <div className='signup-form__row'>
+     {/* <div className='signup-form__row'>
         <div>
-          <img />
-          <img />
-          <img />
+          <div className='signup-form__wrapper'>
+            <img className='signup-form__avatar' src={itachi}/>
+          </div>
+          
+          <div className='signup-form__wrapper'>
+            <img className='signup-form__avatar' src={wonderWoman}/>
+          </div>
+
+          <div className='signup-form__wrapper'>
+            <img className='signup-form__avatar' src={flash}/>
+          </div>
+
           <img />
           <img />
           <img />
@@ -75,7 +87,7 @@ const SignupPage = ({ setAuthToken }) => {
 
         </div>
 
-     </div>
+     </div> */}
 
       <div className='signup-form__actions'>
         <button type="submit" className='signup-form__actions--button'>Sign up</button>

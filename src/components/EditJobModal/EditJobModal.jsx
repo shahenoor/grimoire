@@ -87,6 +87,7 @@ function EditJobModal(props) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log(value);
         setFormState((prev) => ({
             ...prev,
             [name]: value,
