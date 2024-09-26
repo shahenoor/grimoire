@@ -31,15 +31,22 @@ export const getWishlistJobs = ( req, userId) => {
 }
 
 // Create a new Job Application
-export const createJob = (req) => {
+export const createJob = async (req) => {
     const { title, company, location, creation_date, color, status, user_id } = req.body;
-    
+
     if (!title || !company || !location || !creation_date || !color || !status || !user_id) {
         throw new Error("Error: Missing properties");
     }
-    return req.knexDb("jobs").insert(req.body);
-}
 
+    try {
+        const [newJobId] = await req.knexDb("jobs").insert(req.body);
+        const newJobData = await req.knexDb("jobs").select('*').where({ id: newJobId }).first(); 
+        return newJobData; 
+    } catch (error) {
+        console.error(`Error creating job:`, error.message);
+        throw new Error(`Error creating job: ${error.message}`);
+    }
+}
 // Update Job Application
 export const updateJob = async ( req, jobId) => {
     const { title, company, location, url, description, applied_at, deadline, color, salary, status } = req.body;

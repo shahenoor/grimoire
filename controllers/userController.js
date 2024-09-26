@@ -15,14 +15,12 @@ export const signup = async (req, res) => {
   
       const hashedPassword = await bcrypt.hash(password, 10);
   
-      const [newUserId] = await userModel.createUser(req, {
+      const newUser = await userModel.createUser(req, {
         email,
         password: hashedPassword,
         first_name,
         last_name,
       });
-
-      const newUser = await userModel.getUserById(req, newUserId);
   
       const token = jwt.sign({ id: newUser.id }, JWT_SECRET , {
         expiresIn: '1h',
